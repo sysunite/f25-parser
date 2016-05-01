@@ -2,6 +2,9 @@ package com.sysunite.rws.deflecties;
 
 import java.util.GregorianCalendar;
 
+/**
+ * @author Mohamad Alamili <mohamad@sysunite.com>
+ */
 public class StationInfo {
   //TODO unclear what else is needed here
   public Integer sideOfRoad;

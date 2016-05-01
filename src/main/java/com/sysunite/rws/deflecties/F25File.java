@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+/**
+ * @author Mohamad Alamili <mohamad@sysunite.com>
+ */
 public class F25File {
   private static final String NO_DATA = "N0";
 

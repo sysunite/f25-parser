@@ -7,6 +7,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * @author Mohamad Alamili <mohamad@sysunite.com>
+ */
 public class Utils {
   private static DecimalFormat df;
 

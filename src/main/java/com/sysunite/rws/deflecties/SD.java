@@ -1,5 +1,8 @@
 package com.sysunite.rws.deflecties;
 
+/**
+ * @author Mohamad Alamili <mohamad@sysunite.com>
+ */
 public class SD {
   public String id;
   public Integer type;

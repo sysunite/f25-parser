@@ -10,6 +10,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * @author Mohamad Alamili <mohamad@sysunite.com>
+ */
 public class ExcelCreator {
   private static final String TEMPLATE_FILE_NAME = "template.xls";
   private static final int SHEET_INDEX = 0; // sheet to write to (0-based)
