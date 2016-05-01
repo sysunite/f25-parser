@@ -1,7 +1,6 @@
 package com.sysunite.rws.deflecties.tests;
 
 import com.sysunite.rws.deflecties.ExcelCreator;
-import org.junit.Test;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ public class ExcelCreatorTest {
   // change this to the dir where you have a lot of data files
   private static final String DATA_DIR = "../data/f25";
 
-  @Test
   public void test() {
     ExcelCreator ec = new ExcelCreator();
     List<String> errors = ec.convertF25Files(DATA_DIR, "../output/out.xls");

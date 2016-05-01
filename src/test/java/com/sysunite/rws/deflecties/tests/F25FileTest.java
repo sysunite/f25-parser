@@ -7,6 +7,7 @@ import com.sysunite.rws.deflecties.Utils;
 import org.junit.Test;
 
 import java.io.File;
+import java.math.BigDecimal;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -37,7 +38,7 @@ public class F25FileTest {
         sb.append(Utils.f(m.gpsInfo.latitude)).append("\t");
         PeakReadings pr = m.peakReadings.get(0);
         sb.append(Utils.f(pr.peakLoad)).append("\t");
-        for (double d : pr.deflections) {
+        for (BigDecimal d : pr.deflections) {
           sb.append(Utils.f(d)).append("\t");
         }
         System.out.println(sb.toString());
