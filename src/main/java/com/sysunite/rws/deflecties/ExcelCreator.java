@@ -5,6 +5,8 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -170,7 +172,7 @@ public class ExcelCreator {
 
       // IDX_KM = 3;
       c = row.getCell(IDX_KM);
-      setCellData(c, m.stationInfo.station);
+      setCellData(c, m.stationInfo.station.setScale(3, RoundingMode.FLOOR));
 
       // IDX_STATION_INFO_COMMENT = 4; // side of road
       c = row.getCell(IDX_STATION_INFO_COMMENT);
@@ -233,5 +235,10 @@ public class ExcelCreator {
   private void setCellData(Cell c, double d) {
     if (c.getCellType() == Cell.CELL_TYPE_STRING) c.setCellValue(Utils.f(d));
     else c.setCellValue(d);
+  }
+
+  private void setCellData(Cell c, BigDecimal b) {
+    if (c.getCellType() == Cell.CELL_TYPE_STRING) c.setCellValue(b.toString());
+    else c.setCellValue(b.toString());
   }
 }
