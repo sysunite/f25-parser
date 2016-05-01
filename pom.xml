@@ -54,7 +54,7 @@
         <configuration>
 
           <!-- Output name -->
-          <finalName>GisParser.jar</finalName>
+          <finalName>f25parser</finalName>
 
           <!-- Main Class -->
           <archive>
