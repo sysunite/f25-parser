@@ -2,3 +2,6 @@
 .idea
 *.iml
 .DS_Store
+output.xls
+template.xls
+data
