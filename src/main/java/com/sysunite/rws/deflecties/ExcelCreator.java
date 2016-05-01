@@ -188,24 +188,24 @@ public class ExcelCreator {
 
       // IDX_TEMP_ASPHALT = 7;
       c = row.getCell(IDX_TEMP_ASPHALT);
-      setCellData(c, m.stationInfo.temperatureAsphalt);
+      setCellData(c, m.stationInfo.temperatureAsphalt.setScale(1, RoundingMode.FLOOR));
 
       // IDX_TEMP_SURFACE = 8;
       c = row.getCell(IDX_TEMP_SURFACE);
-      setCellData(c, m.stationInfo.temperatureSurface);
+      setCellData(c, m.stationInfo.temperatureSurface.setScale(1, RoundingMode.FLOOR));
 
       // IDX_D0BT = 9;
       c = row.getCell(IDX_D0BT);
-      setCellData(c, nd.D0bt);
+      setCellData(c, new BigDecimal(nd.D0bt).setScale(1, RoundingMode.FLOOR));
 
       // IDX_IDK300BT = 10;
       c = row.getCell(IDX_IDK300BT);
-      setCellData(c, nd.IDK300bt);
+      setCellData(c, new BigDecimal(nd.IDK300bt).setScale(1, RoundingMode.FLOOR));
 
       // IDX_D0_BASE = 11; // 11..17
       for (int j = 0; j < nd.D0bs.length; j++) {
         c = row.getCell(IDX_D0_BASE + j);
-        setCellData(c, nd.D0bs[j]);
+        setCellData(c, new BigDecimal(nd.D0bs[j]).setScale(1, RoundingMode.FLOOR));
       }
 
       // IDX_FILE_NAME = 18;
