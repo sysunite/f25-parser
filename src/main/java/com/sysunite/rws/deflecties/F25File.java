@@ -274,7 +274,7 @@ public class F25File {
       Integer s = 0;
       // last element is sometimes missing
       if (parts.length > 14) s = toInteger(parts[14]);
-      sInfo.dateTime = new GregorianCalendar(y, m, d, h, min, s);
+      sInfo.dateTime = new GregorianCalendar(y, m - 1, d, h, min, s);
     } catch (Exception e) {
       addError("Error parsing station info", lineCnt, line);
       objectsWithParsingErrors.add(sInfo);
@@ -304,7 +304,7 @@ public class F25File {
       Integer h = toInteger(parts[6]);
       Integer min = toInteger(parts[7]);
       Integer s = toInteger(parts[8]);
-      dateTime = new GregorianCalendar(y, m, d, h, min, s);
+      dateTime = new GregorianCalendar(y, m - 1, d, h, min, s);
     } catch (Exception e) {
       addError("Error parsing date", lineCnt, line);
     }
