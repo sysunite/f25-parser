@@ -54,7 +54,7 @@
         <configuration>
 
           <!-- Output name -->
-          <finalName>f25parser</finalName>
+          <finalName>f25-parser</finalName>
 
           <!-- Main Class -->
           <archive>

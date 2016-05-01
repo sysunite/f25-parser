@@ -17,6 +17,10 @@ Finally, in a command prompt, run:
 java -jar f25-parser.jar
 ```
 
+## Options
+Use the command line options --template, --source, and --destination to change either location.
+There is a help printout after running for more information.
+
 ## Prerequisites
 
 - Java 8
