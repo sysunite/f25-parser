@@ -1,16 +1,8 @@
 package com.sysunite.rws.deflecties;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.Vector;
+import java.io.*;
+import java.math.BigDecimal;
+import java.util.*;
 
 /**
  * @author Mohamad Alamili <mohamad@sysunite.com>
@@ -25,8 +17,8 @@ public class F25File {
   public String fileNameOriginal;
   public GregorianCalendar dateTime;
   public List<SD> sds = new Vector<>();
-  public double plateRadius;
-  public List<Double> plateXpositions = new Vector<>();
+  public BigDecimal plateRadius;
+  public List<BigDecimal> plateXpositions = new Vector<>();
   public String operatorName = "";
   public String roadwayId = "";
   public String subsectionId = "";
@@ -167,9 +159,9 @@ public class F25File {
     // 0     1    2  3    ...
     // 5020, 150, 0, 200, 300, 450, 600, 900, 1200, 1500, 1800,N0 ,N0 ...
     try {
-      plateRadius = toDouble(parts[1]);
+      plateRadius = toBigDecimal(parts[1]);
       for (int i = 2; i < parts.length; i++) {
-        Double d = toDouble(parts[i]);
+        BigDecimal d = toBigDecimal(parts[i]);
         if (d == null) break;
         plateXpositions.add(d);
       }
@@ -197,9 +189,9 @@ public class F25File {
       //    1,   721, 292.6, 240.7, 219.8, 186.2, 154.4, 104.8,  74.8, ...
       PeakReadings pr = new PeakReadings();
       pr.sequenceId = toInteger(parts[0]);
-      pr.peakLoad = toDouble(parts[1]);
+      pr.peakLoad = toBigDecimal(parts[1]);
       for (int i = 2; i < parts.length; i++) {
-        Double d = toDouble(parts[i]);
+        BigDecimal d = toBigDecimal(parts[i]);
         pr.deflections.add(d);
       }
       m.peakReadings.add(pr);
@@ -217,9 +209,9 @@ public class F25File {
       Integer err = toInteger(parts[1]);
       gInfo.failureCause = err;
       if (err != null && err == 0) {
-        gInfo.latitude = toDouble(parts[3]);
-        gInfo.longitude = toDouble(parts[4]);
-        gInfo.height = toDouble(parts[5]);
+        gInfo.latitude = toBigDecimal(parts[3]);
+        gInfo.longitude = toBigDecimal(parts[4]);
+        gInfo.height = toBigDecimal(parts[5]);
         //TODO what are fields 6,7,...?
       }
     } catch (Exception e) {
@@ -233,9 +225,9 @@ public class F25File {
     try {
       // 5303,0, 12.3, 18.7, 12.4
       sInfo.isTemperatureInCelsius = parts[1].equals("0");
-      sInfo.temperatureAsphalt = toDouble(parts[2]);
-      sInfo.temperatureSurface = toDouble(parts[3]);
-      sInfo.temperatureAir = toDouble(parts[4]);
+      sInfo.temperatureAsphalt = toBigDecimal(parts[2]);
+      sInfo.temperatureSurface = toBigDecimal(parts[3]);
+      sInfo.temperatureAir = toBigDecimal(parts[4]);
     } catch (Exception e) {
       addError("Error parsing station info", lineCnt, line);
       objectsWithParsingErrors.add(sInfo);
@@ -261,17 +253,17 @@ public class F25File {
       // 5301,2,1,4,2,   41000,1,1,"M       ",2013,06,28,04,33
       sInfo.sideOfRoad = toInteger(parts[1]);
 
-			/*
-			 * Converting distance to km. Supporting conversions from meters,
-			 * and km. TODO anything else needed?
-			 */
+      /*
+       * Converting distance to km.
+       * Supporting conversions from meters and km.
+       */
       double distanceMultiplier = 1; // default for type=3
       Integer distanceUnit = toInteger(parts[4]);
       if (distanceUnit != null) {
         if (distanceUnit == 2) distanceMultiplier = 0.001; // m -> km
       }
-      double distance = toDouble(parts[5]);
-      sInfo.station = distance * distanceMultiplier;
+      BigDecimal distance = toBigDecimal(parts[5]);
+      sInfo.station = distance.multiply(new BigDecimal(distanceMultiplier));
 
       sInfo.lane = getText(parts[8]);
       Integer y = toInteger(parts[9]);
@@ -294,8 +286,8 @@ public class F25File {
       // 5201,"SD 1    ",4,1.000,1.000
       String id = getText(parts[1]);
       Integer type = toInteger(parts[2]);
-      Double relativeGain = toDouble(parts[3]);
-      Double absoluteGain = toDouble(parts[4]);
+      BigDecimal relativeGain = toBigDecimal(parts[3]);
+      BigDecimal absoluteGain = toBigDecimal(parts[4]);
       SD sd = new SD(id, type, relativeGain, absoluteGain);
       sds.add(sd);
     } catch (Exception e) {
@@ -318,9 +310,9 @@ public class F25File {
     }
   }
 
-  private Double toDouble(String s) {
+  private BigDecimal toBigDecimal(String s) {
     if (s.isEmpty() || s.equals(NO_DATA)) return null;
-    return Double.parseDouble(s);
+    return new BigDecimal(s);
   }
 
   private Integer toInteger(String s) {

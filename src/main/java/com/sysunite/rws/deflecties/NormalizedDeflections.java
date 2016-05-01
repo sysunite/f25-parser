@@ -1,5 +1,7 @@
 package com.sysunite.rws.deflecties;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Vector;
 
@@ -20,11 +22,11 @@ public class NormalizedDeflections {
     int D = DXs.length;
     int[] xIndexes = new int[D];
     for (int i = 0; i < D; i++) {
-      double x = DXs[i];
+      BigDecimal x = new BigDecimal(DXs[i]);
       boolean found = false;
       for (int j = 0; j < file.plateXpositions.size(); j++) {
-        double xPosition = file.plateXpositions.get(j);
-        if (Math.abs(x - xPosition) < 0.1) {
+        BigDecimal xPosition = file.plateXpositions.get(j);
+        if (Math.abs(x.subtract(xPosition).doubleValue()) < 0.1) {
           found = true;
           xIndexes[i] = j;
           break;
@@ -36,8 +38,8 @@ public class NormalizedDeflections {
       }
     }
 
-    double plateR = file.plateRadius / 1000;
-    double sref = 50000 / (plateR * plateR) / Math.PI / 1000;
+    BigDecimal plateR = file.plateRadius.divide(new BigDecimal(1000));
+    BigDecimal sref = new BigDecimal(50000).divide(plateR.multiply(plateR), 100, RoundingMode.HALF_UP).divide(new BigDecimal(Math.PI), 100, RoundingMode.HALF_UP).divide(new BigDecimal(1000));
     List<NormalizedDeflections> ret = new Vector<>();
     try {
       for (Measurement m : file.measurements) {
@@ -48,15 +50,15 @@ public class NormalizedDeflections {
           double sum = 0;
           for (int p = 1; p < P; p++) { // reading #1 is ignored?
             PeakReadings pr = m.peakReadings.get(p);
-            double v = pr.deflections.get(index);
-            v *= sref / pr.peakLoad;
-            sum += v;
+            BigDecimal v = pr.deflections.get(index);
+            v = v.multiply(sref.divide(pr.peakLoad, 100, RoundingMode.HALF_UP));
+            sum += v.doubleValue();
           }
           double avg = sum / (P - 1);
           nd.D0bs[i] = avg;
         } // for deflections
 
-        double tNorm = m.stationInfo.temperatureAsphalt - 20;
+        double tNorm = m.stationInfo.temperatureAsphalt.subtract(new BigDecimal(20)).doubleValue();
         double d0b = nd.D0bs[0];
         nd.D0bt = d0b / (1 + 0.013926 * tNorm + 0.0002298 * (tNorm * tNorm));
 

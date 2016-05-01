@@ -1,5 +1,7 @@
 package com.sysunite.rws.deflecties;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.GregorianCalendar;
 
 /**
@@ -8,17 +10,17 @@ import java.util.GregorianCalendar;
 public class StationInfo {
   //TODO unclear what else is needed here
   public Integer sideOfRoad;
-  public double station; // converted always to km
+  public BigDecimal station; // converted always to km
   public String lane;
   public GregorianCalendar dateTime;
   public String comment = "";
   public boolean isTemperatureInCelsius = true;
-  public Double temperatureAsphalt;
-  public Double temperatureSurface;
-  public Double temperatureAir;
+  public BigDecimal temperatureAsphalt;
+  public BigDecimal temperatureSurface;
+  public BigDecimal temperatureAir;
 
   @Override
   public String toString() {
-    return Utils.f(station);
+    return station.toString();
   }
 }

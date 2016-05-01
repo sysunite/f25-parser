@@ -1,5 +1,6 @@
 package com.sysunite.rws.deflecties;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -26,6 +27,10 @@ public class Utils {
    */
   public static String f(double d) {
     return df.format(d);
+  }
+
+  public static String f(BigDecimal d) {
+    return d.toString();
   }
 
   private static DateFormat ymdFormat = new SimpleDateFormat("yyyy.MM.dd");
