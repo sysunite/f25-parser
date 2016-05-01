@@ -14,7 +14,7 @@ import java.util.Vector;
  * @author Mohamad Alamili <mohamad@sysunite.com>
  */
 public class ExcelCreator {
-  private static final String TEMPLATE_FILE_NAME = "template.xls";
+  private String templateFilePath;
   private static final int SHEET_INDEX = 0; // sheet to write to (0-based)
   private static final int START_ROW = 2; // first row to write to (0-based)
   private static final int FIRST_COL = 0; // first col to write to (0-based)
@@ -40,14 +40,21 @@ public class ExcelCreator {
   private Sheet sheet;
   private List<String> errors;
 
+  public ExcelCreator() {
+  }
+
+  public ExcelCreator(String templateFilePath) {
+    this.templateFilePath = templateFilePath;
+  }
+
   /*
-   * Recursively processes each f25 file in a directory and writes a row for
-   * each measurement into an Excel file. The second parameter is the full
-   * path and name of the Excel to be written. The method returns a List of
-   * error messages. Note that some errors are fatal (like missing input
-   * directory) but some are not (like a missing GPS value in a measurement)
-   * so the output file may be created even in case of errors.
-   */
+     * Recursively processes each f25 file in a directory and writes a row for
+     * each measurement into an Excel file. The second parameter is the full
+     * path and name of the Excel to be written. The method returns a List of
+     * error messages. Note that some errors are fatal (like missing input
+     * directory) but some are not (like a missing GPS value in a measurement)
+     * so the output file may be created even in case of errors.
+     */
   public List<String> convertF25Files(String inputDirPath, String outputFilePath) {
     errors = new Vector<>();
     Workbook excel = null;
@@ -64,7 +71,14 @@ public class ExcelCreator {
     try {
       if (!outputDir.exists()) outputDir.mkdirs();
       // copy template to output directory
-      String url = getClass().getClassLoader().getResource(TEMPLATE_FILE_NAME).getFile();
+      String url;
+      if (templateFilePath == null) {
+        url = getClass().getClassLoader().getResource("template.xls").getFile();
+      }
+      else {
+        url = templateFilePath;
+      }
+
       File templateFile = new File(url);
       Files.copy(templateFile.toPath(), xlsFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
       xlsStream = new FileInputStream(xlsFile);
