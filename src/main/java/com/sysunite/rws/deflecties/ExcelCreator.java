@@ -210,7 +210,7 @@ public class ExcelCreator {
 
       // IDX_FILE_NAME = 18;
       c = row.getCell(IDX_FILE_NAME);
-      setCellData(c, f25.fileNameOriginal);
+      setCellData(c, f25.fileName);
 
       if (m.gpsInfo != null) {
         // IDX_LONGITUDE = 19;

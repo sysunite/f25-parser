@@ -14,7 +14,6 @@ public class F25File {
   public List<String> warnings = new Vector<>();
 
   public String fileName;
-  public String fileNameOriginal;
   public GregorianCalendar dateTime;
   public List<SD> sds = new Vector<>();
   public BigDecimal plateRadius;
@@ -67,10 +66,6 @@ public class F25File {
         }
 
         int lineId = Integer.parseInt(parts[0]);
-        if (lineId == 5003) {
-          parseNames(lineCnt, line, parts);
-          continue;
-        }
         if (lineId == 5011) {
           parseDateAndTime(lineCnt, line, parts);
           continue;
@@ -167,18 +162,6 @@ public class F25File {
       }
     } catch (Exception e) {
       addError("Error parsing plate x positions", lineCnt, line);
-    }
-  }
-
-  private void parseNames(int lineCnt, String line, String[] parts) {
-    try {
-      // 0    1           2          3         4
-      // 5003,"OPERATOR","STANDARD","RWO1 27-","F25"
-      String fName = getText(parts[3]);
-      String ext = getText(parts[4]);
-      fileNameOriginal = fName + "." + ext;
-    } catch (Exception e) {
-      addError("Error parsing names", lineCnt, line);
     }
   }
 
