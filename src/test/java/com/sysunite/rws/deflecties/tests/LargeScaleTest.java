@@ -31,7 +31,7 @@ public class LargeScaleTest {
       if (f.getName().toLowerCase().endsWith(".f25")) {
         System.out.println("-------\n" + f.getAbsolutePath());
         try {
-          F25File f25 = new F25File(f);
+          F25File f25 = new F25File("", f);
           if (!f25.errors.isEmpty()) {
             System.out.println("Errors:");
             for (String err : f25.errors) System.out.println("  " + err);

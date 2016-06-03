@@ -16,15 +16,16 @@ import java.util.Vector;
  * @author Mohamad Alamili <mohamad@sysunite.com>
  */
 public class ExcelCreator {
+  private String dataFilePath;
   private String templateFilePath;
   private static final int SHEET_INDEX = 0; // sheet to write to (0-based)
   private static final int START_ROW = 2; // first row to write to (0-based)
   private static final int FIRST_COL = 0; // first col to write to (0-based)
-  private static final int LAST_COL = 20; // last col to write to (0-based)
+  private static final int LAST_COL = 24; // last col to write to (0-based)
   // field indexes
   private static final int IDX_ROADWAY_ID = 0;
   private static final int IDX_SUBSECTION_ID = 1;
-  private static final int IDX_STROOK = 2; // what is this?
+  private static final int IDX_STROOK = 2;
   private static final int IDX_KM = 3;
   private static final int IDX_STATION_INFO_COMMENT = 4; // side of road
   private static final int IDX_DATE = 5;
@@ -37,6 +38,10 @@ public class ExcelCreator {
   private static final int IDX_FILE_NAME = 18;
   private static final int IDX_LONGITUDE = 19;
   private static final int IDX_LATITUDE = 20;
+  private static final int IDX_FIRST_DIR = 21;
+  private static final int IDX_SECOND_DIR = 22;
+  private static final int IDX_THIRD_DIR = 23;
+  private static final int IDX_FOURTH_DIR = 24;
 
   private int rowIndex;
   private Sheet sheet;
@@ -58,6 +63,7 @@ public class ExcelCreator {
      * so the output file may be created even in case of errors.
      */
   public List<String> convertF25Files(String inputDirPath, String outputFilePath) {
+    dataFilePath = inputDirPath;
     errors = new Vector<>();
     Workbook excel = null;
     FileInputStream xlsStream = null;
@@ -114,7 +120,7 @@ public class ExcelCreator {
       }
     } else {
       if (!f.getName().toLowerCase().endsWith(".f25")) return;
-      F25File f25 = new F25File(f);
+      F25File f25 = new F25File(dataFilePath, f);
       String name = f.getName();
       if (!f25.errors.isEmpty()) {
         for (String e : f25.errors) {
@@ -166,7 +172,7 @@ public class ExcelCreator {
       c = row.getCell(IDX_SUBSECTION_ID);
       setCellData(c, f25.subsectionId);
 
-      // IDX_STROOK = 2; // TODO what is this?
+      // IDX_STROOK = 2;
       c = row.getCell(IDX_STROOK);
       setCellData(c, "");
 
@@ -223,6 +229,20 @@ public class ExcelCreator {
       } else {
         errors.add("No GPS data for measurement " + i + " in file " + f25.fileName);
       }
+
+      // DIRECTORIES
+      c = row.getCell(IDX_FIRST_DIR);
+      setCellData(c, f25.firstDir);
+
+      c = row.getCell(IDX_SECOND_DIR);
+      setCellData(c, f25.secondDir);
+
+      c = row.getCell(IDX_THIRD_DIR);
+      setCellData(c, f25.thirdDir);
+
+      c = row.getCell(IDX_FOURTH_DIR);
+      setCellData(c, f25.fourthDir);
+
     } catch (Exception e) {
       errors.add("Error with measurement " + i + " in file " + f25.fileName);
     }

@@ -2,6 +2,8 @@ package com.sysunite.rws.deflecties;
 
 import java.io.*;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -13,6 +15,7 @@ public class F25File {
   public List<String> errors = new Vector<>();
   public List<String> warnings = new Vector<>();
 
+  public String dataFilePath;
   public String fileName;
   public GregorianCalendar dateTime;
   public List<SD> sds = new Vector<>();
@@ -21,20 +24,25 @@ public class F25File {
   public String operatorName = "";
   public String roadwayId = "";
   public String subsectionId = "";
+  public String firstDir = "";
+  public String secondDir = "";
+  public String thirdDir = "";
+  public String fourthDir = "";
   public StationInfo stationInfo;
   public List<Measurement> measurements = new Vector<>();
 
   private Set<Object> objectsWithParsingErrors = new HashSet<>();
 
-  public F25File(File file) throws FileNotFoundException {
+  public F25File(String dataFilePath, File file) throws FileNotFoundException {
+    this.dataFilePath = dataFilePath;
     if (file == null || !file.exists()) {
       throw new FileNotFoundException();
     }
     parse(file);
   }
 
-  public F25File(String path) throws FileNotFoundException {
-    this(new File(path));
+  public F25File(String dataFilePath, String path) throws FileNotFoundException {
+    this(dataFilePath, new File(path));
   }
 
   private void parse(File file) {
@@ -42,6 +50,20 @@ public class F25File {
     int lineCnt = 0;
     String line = null;
     try {
+      // Substract the data dir from the absolute path to get the first 4 dirs
+      Path dataPath = Paths.get(dataFilePath);
+      Path relativePath = dataPath.relativize(Paths.get(file.getAbsolutePath()));
+
+      try {
+        firstDir  = relativePath.getName(0).toString();
+        secondDir = relativePath.getName(1).toString();
+        thirdDir  = relativePath.getName(2).toString();
+        fourthDir = relativePath.getName(3).toString();
+      }
+      catch(Exception e){
+        System.out.println("Could not get directory path, error: " + e.getMessage());
+      }
+
       InputStream is = new FileInputStream(file);
       InputStreamReader isr = new InputStreamReader(is, "UTF-8");
       LineNumberReader lnr = new LineNumberReader(isr);

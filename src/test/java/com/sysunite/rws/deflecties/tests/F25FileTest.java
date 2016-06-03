@@ -27,7 +27,7 @@ public class F25FileTest {
 		 * each measurement in a tab-separated style.
 		 */
     try {
-      F25File f = new F25File(getTestFile());
+      F25File f = new F25File("", getTestFile());
       for (Measurement m : f.measurements) {
         StringBuilder sb = new StringBuilder();
         sb.append(Utils.f(m.stationInfo.station)).append("\t");
@@ -52,7 +52,7 @@ public class F25FileTest {
   @Test
   public void testCreationFromFile() {
     try {
-      F25File f = new F25File(getTestFile());
+      F25File f = new F25File("", getTestFile());
       assertNotNull(f);
     } catch (Exception e) {
       fail("Exception: " + e.getMessage());
@@ -63,7 +63,7 @@ public class F25FileTest {
   @Test
   public void testCreationFromString() {
     try {
-      F25File f = new F25File(getTestFile().getAbsolutePath());
+      F25File f = new F25File("", getTestFile().getAbsolutePath());
       assertNotNull(f);
     } catch (Exception e) {
       fail("Exception: " + e.getMessage());
@@ -75,7 +75,7 @@ public class F25FileTest {
   public void testCreationMissingFile() {
     try {
       @SuppressWarnings("unused")
-      F25File f = new F25File("no such file");
+      F25File f = new F25File("", "no such file");
       fail("Should have thrown exception");
     } catch (Exception e) {
       // ok

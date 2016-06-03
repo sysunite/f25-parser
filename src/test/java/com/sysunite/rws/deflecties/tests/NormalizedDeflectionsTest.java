@@ -19,7 +19,7 @@ public class NormalizedDeflectionsTest {
   @Test
   public void testDeflections() {
     try {
-      F25File f = new F25File(getTestFile());
+      F25File f = new F25File("", getTestFile());
       List<NormalizedDeflections> ndList = NormalizedDeflections.getDeflections(f);
       assertNull(NormalizedDeflections.error);
       NormalizedDeflections nd = ndList.get(0);
