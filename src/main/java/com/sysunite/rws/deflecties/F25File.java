@@ -222,7 +222,21 @@ public class F25File {
     try {
       // 0    1 2 3 4 5 6 7 8 9
       // 5302,0,0,A,p,0,1,0,0,"Comment     "
-      if (parts.length > 9) sInfo.comment = getText(parts[9]);
+      if (parts.length > 7) {
+        boolean conditionL = parts[5].equals("1");
+        boolean conditionT = parts[6].equals("1");
+        boolean conditionR = parts[7].equals("1");
+
+        if (conditionL) {
+          sInfo.comment = "L";
+        }
+        else if(conditionT) {
+          sInfo.comment = "T";
+        }
+        else if(conditionR) {
+          sInfo.comment = "R";
+        }
+      }
     } catch (Exception e) {
       addError("Error parsing station info", lineCnt, line);
       objectsWithParsingErrors.add(sInfo);
