@@ -170,11 +170,11 @@ public class ExcelCreator {
 
       // IDX_SUBSECTION_ID = 1;
       c = row.getCell(IDX_SUBSECTION_ID);
-      setCellData(c, f25.subsectionId);
+      setCellData(c, m.stationInfo.sideOfRoad);
 
       // IDX_STROOK = 2;
       c = row.getCell(IDX_STROOK);
-      setCellData(c, "");
+      setCellData(c, m.stationInfo.lane);
 
       // IDX_KM = 3;
       c = row.getCell(IDX_KM);
