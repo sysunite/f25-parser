@@ -2,7 +2,7 @@
 This is a F25 parser for deflection measurements
 
 ## How to run
-Download the latest release: https://github.com/sysunite/f25-parser/releases/download/v0.6.1/f25-parser.zip
+Download the latest release: https://github.com/sysunite/f25-parser/releases/download/v0.6.2/f25-parser.zip
 
 After unpacking, you should have:
 
