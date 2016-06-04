@@ -284,7 +284,7 @@ public class F25File {
       BigDecimal distance = toBigDecimal(parts[5]);
       sInfo.station = distance.multiply(new BigDecimal(distanceMultiplier));
 
-      sInfo.lane = getText(parts[8]);
+      sInfo.lane = parts[7];
       Integer y = toInteger(parts[9]);
       Integer m = toInteger(parts[10]);
       Integer d = toInteger(parts[11]);
