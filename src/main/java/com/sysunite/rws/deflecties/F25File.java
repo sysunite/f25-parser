@@ -271,18 +271,9 @@ public class F25File {
       // 0    1 2 3 4    5     6 7 8          9    10 11 12 13
       // 5301,2,1,4,2,   41000,1,1,"M       ",2013,06,28,04,33
       sInfo.sideOfRoad = toInteger(parts[1]);
-
-      /*
-       * Converting distance to km.
-       * Supporting conversions from meters and km.
-       */
-      double distanceMultiplier = 1; // default for type=3
-      Integer distanceUnit = toInteger(parts[4]);
-      if (distanceUnit != null) {
-        if (distanceUnit == 2) distanceMultiplier = 0.001; // m -> km
-      }
+      
       BigDecimal distance = toBigDecimal(parts[5]);
-      sInfo.station = distance.multiply(new BigDecimal(distanceMultiplier));
+      sInfo.station = distance;
 
       sInfo.lane = parts[7];
       Integer y = toInteger(parts[9]);

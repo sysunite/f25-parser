@@ -178,7 +178,17 @@ public class ExcelCreator {
 
       // IDX_KM = 3;
       c = row.getCell(IDX_KM);
-      setCellData(c, m.stationInfo.station.setScale(3, RoundingMode.FLOOR));
+      boolean isInteger = m.stationInfo.station.scale() <= 0;
+
+      BigDecimal km;
+      if (isInteger) {
+        km = m.stationInfo.station.divide(new BigDecimal(1000));
+        km = km.setScale(3, RoundingMode.FLOOR);
+      }
+      else {
+        km = m.stationInfo.station;
+      }
+      setCellData(c, km);
 
       // IDX_STATION_INFO_COMMENT = 4; // side of road
       c = row.getCell(IDX_STATION_INFO_COMMENT);
