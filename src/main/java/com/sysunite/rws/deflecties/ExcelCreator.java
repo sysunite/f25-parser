@@ -23,25 +23,27 @@ public class ExcelCreator {
   private static final int FIRST_COL = 0; // first col to write to (0-based)
   private static final int LAST_COL = 24; // last col to write to (0-based)
   // field indexes
-  private static final int IDX_ROADWAY_ID = 0;
-  private static final int IDX_SUBSECTION_ID = 1;
-  private static final int IDX_STROOK = 2;
-  private static final int IDX_KM = 3;
-  private static final int IDX_STATION_INFO_COMMENT = 4; // side of road
-  private static final int IDX_DATE = 5;
-  private static final int IDX_TIME = 6;
-  private static final int IDX_TEMP_ASPHALT = 7;
-  private static final int IDX_TEMP_SURFACE = 8;
-  private static final int IDX_D0BT = 9;
-  private static final int IDX_IDK300BT = 10;
-  private static final int IDX_D0_BASE = 11; // 11..17
-  private static final int IDX_FILE_NAME = 18;
-  private static final int IDX_LONGITUDE = 19;
-  private static final int IDX_LATITUDE = 20;
-  private static final int IDX_FIRST_DIR = 21;
-  private static final int IDX_SECOND_DIR = 22;
-  private static final int IDX_THIRD_DIR = 23;
-  private static final int IDX_FOURTH_DIR = 24;
+
+  private static final int IDX_FIRST_DIR = 0;
+  private static final int IDX_SECOND_DIR = 1;
+  private static final int IDX_THIRD_DIR = 2;
+  private static final int IDX_FOURTH_DIR = 3;
+  private static final int IDX_KM = 4;
+  private static final int IDX_STATION_INFO_COMMENT = 5; // side of road
+  private static final int IDX_DATE = 6;
+  private static final int IDX_TIME = 7;
+  private static final int IDX_TEMP_ASPHALT = 8;
+  private static final int IDX_TEMP_SURFACE = 9;
+  private static final int IDX_D0BT = 10;
+  private static final int IDX_IDK300BT = 11;
+  private static final int IDX_D0_BASE = 12; // 11..18
+  private static final int IDX_FILE_NAME = 19;
+  private static final int IDX_LONGITUDE = 20;
+  private static final int IDX_LATITUDE = 21;
+  private static final int IDX_ROADWAY_ID = 22;
+  private static final int IDX_SUBSECTION_ID = 23;
+  private static final int IDX_STROOK = 24;
+
 
   private int rowIndex;
   private Sheet sheet;
@@ -164,19 +166,19 @@ public class ExcelCreator {
     try {
       Cell c;
 
-      // IDX_ROADWAY_ID = 0;
+      // IDX_ROADWAY_ID
       c = row.getCell(IDX_ROADWAY_ID);
       setCellData(c, f25.roadwayId);
 
-      // IDX_SUBSECTION_ID = 1;
+      // IDX_SUBSECTION_ID
       c = row.getCell(IDX_SUBSECTION_ID);
       setCellData(c, m.stationInfo.sideOfRoad);
 
-      // IDX_STROOK = 2;
+      // IDX_STROOK
       c = row.getCell(IDX_STROOK);
       setCellData(c, m.stationInfo.lane);
 
-      // IDX_KM = 3;
+      // IDX_KM
       c = row.getCell(IDX_KM);
       boolean isInteger = m.stationInfo.station.scale() <= 0;
 
@@ -190,50 +192,50 @@ public class ExcelCreator {
       }
       setCellData(c, km);
 
-      // IDX_STATION_INFO_COMMENT = 4; // side of road
+      // IDX_STATION_INFO_COMMENT
       c = row.getCell(IDX_STATION_INFO_COMMENT);
       setCellData(c, m.stationInfo.comment);
 
-      // IDX_DATE = 5;
+      // IDX_DATE
       c = row.getCell(IDX_DATE);
       setCellData(c, Utils.toYearMonthDay(m.stationInfo.dateTime));
 
-      // IDX_TIME = 6;
+      // IDX_TIME
       c = row.getCell(IDX_TIME);
       setCellData(c, Utils.toHourMinSec(m.stationInfo.dateTime));
 
-      // IDX_TEMP_ASPHALT = 7;
+      // IDX_TEMP_ASPHALT
       c = row.getCell(IDX_TEMP_ASPHALT);
       setCellData(c, m.stationInfo.temperatureAsphalt.setScale(1, RoundingMode.FLOOR));
 
-      // IDX_TEMP_SURFACE = 8;
+      // IDX_TEMP_SURFACE
       c = row.getCell(IDX_TEMP_SURFACE);
       setCellData(c, m.stationInfo.temperatureSurface.setScale(1, RoundingMode.FLOOR));
 
-      // IDX_D0BT = 9;
+      // IDX_D0BT
       c = row.getCell(IDX_D0BT);
       setCellData(c, new BigDecimal(nd.D0bt).setScale(1, RoundingMode.FLOOR));
 
-      // IDX_IDK300BT = 10;
+      // IDX_IDK300BT
       c = row.getCell(IDX_IDK300BT);
       setCellData(c, new BigDecimal(nd.IDK300bt).setScale(1, RoundingMode.FLOOR));
 
-      // IDX_D0_BASE = 11; // 11..17
+      // IDX_D0_BASE = 12; // 12..18
       for (int j = 0; j < nd.D0bs.length; j++) {
         c = row.getCell(IDX_D0_BASE + j);
         setCellData(c, new BigDecimal(nd.D0bs[j]).setScale(1, RoundingMode.FLOOR));
       }
 
-      // IDX_FILE_NAME = 18;
+      // IDX_FILE_NAME
       c = row.getCell(IDX_FILE_NAME);
       setCellData(c, f25.fileName);
 
       if (m.gpsInfo != null) {
-        // IDX_LONGITUDE = 19;
+        // IDX_LONGITUDE
         c = row.getCell(IDX_LONGITUDE);
         setCellData(c, m.gpsInfo.longitude);
 
-        // IDX_LATITUDE = 20;
+        // IDX_LATITUDE
         c = row.getCell(IDX_LATITUDE);
         setCellData(c, m.gpsInfo.latitude);
       } else {
