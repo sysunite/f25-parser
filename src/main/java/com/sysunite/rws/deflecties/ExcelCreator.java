@@ -271,6 +271,6 @@ public class ExcelCreator {
 
   private void setCellData(Cell c, BigDecimal b) {
     if (c.getCellType() == Cell.CELL_TYPE_STRING) c.setCellValue(b.toString());
-    else c.setCellValue(b.toString());
+    else c.setCellValue(b.doubleValue());
   }
 }
