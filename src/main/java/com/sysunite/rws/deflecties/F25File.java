@@ -27,7 +27,7 @@ public class F25File {
   public String firstDir = "";
   public String secondDir = "";
   public String thirdDir = "";
-  public String fourthDir = "";
+  public String fileNameFromF25 = "";
   public StationInfo stationInfo;
   public List<Measurement> measurements = new Vector<>();
 
@@ -58,7 +58,6 @@ public class F25File {
         firstDir  = relativePath.getName(0).toString();
         secondDir = relativePath.getName(1).toString();
         thirdDir  = relativePath.getName(2).toString();
-        fourthDir = relativePath.getName(3).toString();
       }
       catch(Exception e){
         System.out.println("Could not get directory path, error: " + e.getMessage());
@@ -88,6 +87,10 @@ public class F25File {
         }
 
         int lineId = Integer.parseInt(parts[0]);
+        if (lineId == 5003) {
+          fileNameFromF25 = getText(parts[3]);
+          continue;
+        }
         if (lineId == 5011) {
           parseDateAndTime(lineCnt, line, parts);
           continue;
