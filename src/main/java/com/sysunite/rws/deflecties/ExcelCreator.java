@@ -27,22 +27,23 @@ public class ExcelCreator {
   private static final int IDX_FIRST_DIR = 0;
   private static final int IDX_SECOND_DIR = 1;
   private static final int IDX_THIRD_DIR = 2;
-  private static final int IDX_FOURTH_DIR = 3;
-  private static final int IDX_KM = 4;
-  private static final int IDX_STATION_INFO_COMMENT = 5; // side of road
-  private static final int IDX_DATE = 6;
-  private static final int IDX_TIME = 7;
-  private static final int IDX_TEMP_ASPHALT = 8;
-  private static final int IDX_TEMP_SURFACE = 9;
-  private static final int IDX_D0BT = 10;
-  private static final int IDX_IDK300BT = 11;
-  private static final int IDX_D0_BASE = 12; // 11..18
-  private static final int IDX_FILE_NAME = 19;
-  private static final int IDX_LONGITUDE = 20;
-  private static final int IDX_LATITUDE = 21;
-  private static final int IDX_ROADWAY_ID = 22;
-  private static final int IDX_SUBSECTION_ID = 23;
-  private static final int IDX_STROOK = 24;
+  private static final int IDX_KM = 3;
+  private static final int IDX_STATION_INFO_COMMENT = 4; // side of road
+  private static final int IDX_DATE = 5;
+  private static final int IDX_TIME = 6;
+  private static final int IDX_TEMP_ASPHALT = 7;
+  private static final int IDX_TEMP_SURFACE = 8;
+  private static final int IDX_D0BT = 9;
+  private static final int IDX_IDK300BT = 10;
+  private static final int IDX_D0_BASE = 11; // 11..18
+  private static final int IDX_FILE_NAME = 18;
+  private static final int IDX_LONGITUDE = 19;
+  private static final int IDX_LATITUDE = 20;
+  private static final int IDX_ROADWAY_ID = 21;
+  private static final int IDX_SUBSECTION_ID = 22;
+  private static final int IDX_STROOK = 23;
+  private static final int IDX_FILENAME_FROM_25 = 24;
+
 
 
   private int rowIndex;
@@ -252,8 +253,8 @@ public class ExcelCreator {
       c = row.getCell(IDX_THIRD_DIR);
       setCellData(c, f25.thirdDir);
 
-      c = row.getCell(IDX_FOURTH_DIR);
-      setCellData(c, f25.fourthDir);
+      c = row.getCell(IDX_FILENAME_FROM_25);
+      setCellData(c, f25.fileNameFromF25);
 
     } catch (Exception e) {
       errors.add("Error with measurement " + i + " in file " + f25.fileName);
