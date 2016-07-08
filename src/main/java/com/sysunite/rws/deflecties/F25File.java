@@ -278,7 +278,7 @@ public class F25File {
       BigDecimal distance = toBigDecimal(parts[5]);
       sInfo.station = distance;
 
-      sInfo.lane = parts[7];
+      sInfo.lane = toBigDecimal(parts[7]);
       Integer y = toInteger(parts[9]);
       Integer m = toInteger(parts[10]);
       Integer d = toInteger(parts[11]);
@@ -324,7 +324,7 @@ public class F25File {
   }
 
   private BigDecimal toBigDecimal(String s) {
-    if (s.isEmpty() || s.equals(NO_DATA)) return null;
+    if (s == null || s.isEmpty() || s.equals(NO_DATA)) return null;
     return new BigDecimal(s);
   }
 
