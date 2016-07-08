@@ -129,7 +129,6 @@ public class ExcelCreator {
         for (String e : f25.errors) {
           errors.add("Parsing error in " + name + ": " + e);
         }
-        return;
       }
 
       int mCnt = f25.measurements.size();
@@ -137,7 +136,6 @@ public class ExcelCreator {
       String ndErr = NormalizedDeflections.error;
       if (ndErr != null) {
         errors.add("Error getting normalized deflections in " + name + ": " + ndErr);
-        return;
       }
 
       for (int i = 0; i < mCnt; i++) {
@@ -262,16 +260,25 @@ public class ExcelCreator {
   }
 
   private void setCellData(Cell c, String s) {
-    c.setCellValue(s);
+    if (s == null)
+      c.setCellValue("ERROR");
+    else
+      c.setCellValue(s);
   }
 
   private void setCellData(Cell c, double d) {
-    if (c.getCellType() == Cell.CELL_TYPE_STRING) c.setCellValue(Utils.f(d));
-    else c.setCellValue(d);
+    if (c.getCellType() == Cell.CELL_TYPE_STRING)
+      c.setCellValue(Utils.f(d));
+    else
+      c.setCellValue(d);
   }
 
   private void setCellData(Cell c, BigDecimal b) {
-    if (c.getCellType() == Cell.CELL_TYPE_STRING) c.setCellValue(b.toString());
-    else c.setCellValue(b.doubleValue());
+    if (b == null)
+      c.setCellValue("ERROR");
+    else if (c.getCellType() == Cell.CELL_TYPE_STRING)
+      c.setCellValue(b.toString());
+    else
+      c.setCellValue(b.doubleValue());
   }
 }
