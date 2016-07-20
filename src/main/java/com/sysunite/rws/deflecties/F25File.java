@@ -50,18 +50,19 @@ public class F25File {
     int lineCnt = 0;
     String line = null;
     try {
-      // Substract the data dir from the absolute path to get the first 4 dirs
-      Path dataPath = Paths.get(dataFilePath);
-      Path relativePath = dataPath.relativize(Paths.get(file.getAbsolutePath()));
-
       try {
-        firstDir  = relativePath.getName(0).toString();
-        secondDir = relativePath.getName(1).toString();
-        thirdDir  = relativePath.getName(2).toString();
-      }
-      catch(Exception e){
-        System.out.println("Could not get directory path, error: " + e.getMessage());
-      }
+        // Substract the data dir from the absolute path to get the first 4 dirs
+        Path dataPath = Paths.get(dataFilePath);
+        Path relativePath = dataPath.relativize(Paths.get(file.getAbsolutePath()));
+
+        try {
+          firstDir = relativePath.getName(0).toString();
+          secondDir = relativePath.getName(1).toString();
+          thirdDir = relativePath.getName(2).toString();
+        } catch (Exception e) {
+          System.out.println("Could not get directory path, error: " + e.getMessage());
+        }
+      } catch (Exception e){}
 
       InputStream is = new FileInputStream(file);
       InputStreamReader isr = new InputStreamReader(is, "UTF-8");
