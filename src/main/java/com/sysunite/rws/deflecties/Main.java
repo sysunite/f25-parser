@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) throws IOException {
-    final String VERSION = "0.7.3";
+    final String VERSION = "1.0.0";
     final String ART =
       "                                                          _________________________   \n" +
       "                     /\\\\      _____          _____       |   |     |     |    | |  \\  \n" +
