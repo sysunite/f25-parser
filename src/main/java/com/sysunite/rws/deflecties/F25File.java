@@ -204,6 +204,10 @@ public class F25File {
         pr.deflections.add(d);
       }
       m.peakReadings.add(pr);
+
+      if(m.peakReadings.size() > 4){
+        addError("Error parsing station info", lineCnt, line);
+      }
     } catch (Exception e) {
       addError("Error parsing peak readings", lineCnt, line);
       objectsWithParsingErrors.add(m);
